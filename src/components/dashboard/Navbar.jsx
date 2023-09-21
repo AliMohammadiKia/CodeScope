@@ -90,7 +90,7 @@ export const NavigationBar = () => {
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.text}-${index}`}>
-            <Link color="foreground" className="w-full" href="#" size="lg">
+            <Link color="foreground" className="w-full" to={item.id} size="lg">
               {item.text}
             </Link>
           </NavbarMenuItem>
