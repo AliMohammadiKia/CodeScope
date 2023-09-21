@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "Estedad-FD";
+  src: url("../fonts/Estedad.woff2") format("woff2");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    direction: rtl;
+    font-family: "Estedad-FD";
+    font-weight: 300;
+  }
+}
+@layer components {
+  .rtl {
+    direction: rtl;
+  }
+}
