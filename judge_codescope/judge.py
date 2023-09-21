@@ -21,4 +21,3 @@ compare_user_answer(script_user(), correct_answer)
 
 """
 
-
