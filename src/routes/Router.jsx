@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import {
   Article,
   Auth,
@@ -11,7 +11,7 @@ import {
   Team,
 } from "../components";
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
