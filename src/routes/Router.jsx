@@ -9,6 +9,7 @@ import {
   NotFound,
   Race,
   Team,
+  Question,
 } from "../components";
 
 export const router = createHashRouter([
@@ -47,6 +48,10 @@ export const router = createHashRouter([
   {
     path: "/article",
     element: <Article />,
+  },
+  {
+    path: "/exercise/question/:questionId",
+    element: <Question />,
   },
   {
     path: "/*",

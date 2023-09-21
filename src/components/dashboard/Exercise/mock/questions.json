@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "questionTitle": "توابع پایتون",
+    "questionDescription": "لطفاً برنامه ای بنویسید تا برخی از اسناد توابع داخلی پایتون را چاپ کند، مانند abs()، int()، raw_input() و سند را برای عملکرد خود اضافه کنید.",
+    "status": "آسون",
+    "category": ["Python", "Javascript"],
+    "acceptance": "66%",
+    "solution": {
+      "isSolution": true,
+      "type": "ویدیویی",
+      "text": "print abs.__doc__\nprint int.__doc__\nprint raw_input.__doc__"
+    },
+    "input": {
+      "1": {
+        "number1": "2",
+        "number2": "4"
+      }
+    },
+    "output": {
+      "1": "6"
+    }
+  },
+  {
+    "id": 2,
+    "questionTitle": "مثال دوم زبان جاوااسکریپت",
+    "questionDescription": "لطفاً برنامه ای بنویسید تا برخی از اسناد توابع داخلی پایتون را چاپ کند، مانند abs()، int()، raw_input() و سند را برای عملکرد خود اضافه کنید.",
+    "status": "سخت",
+    "category": ["Javascript"],
+    "acceptance": "23%",
+    "solution": {
+      "isSolution": false,
+      "type": "",
+      "text": ""
+    },
+    "input": {
+      "1": {
+        "number1": "2",
+        "number2": "4"
+      }
+    },
+    "output": {
+      "1": "6"
+    }
+  },
+  {
+    "id": 3,
+    "questionTitle": "الگوریتم و دیتابیس",
+    "questionDescription": "لطفاً برنامه ای بنویسید تا برخی از اسناد توابع داخلی پایتون را چاپ کند، مانند abs()، int()، raw_input() و سند را برای عملکرد خود اضافه کنید.",
+    "status": "متوسط",
+    "category": ["SQL", "NoSQL"],
+    "acceptance": "45%",
+    "solution": {
+      "isSolution": false,
+      "type": "",
+      "text": ""
+    },
+    "input": {
+      "1": {
+        "number1": "2",
+        "number2": "4"
+      }
+    },
+    "output": {
+      "1": "6"
+    }
+  }
+]

@@ -1,4 +1,4 @@
-import { NavigationBar } from "./";
+import { NavigationBar } from "../";
 
 export const Team = () => {
   return (

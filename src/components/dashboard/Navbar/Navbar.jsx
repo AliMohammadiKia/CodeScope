@@ -17,7 +17,6 @@ import {
 
 export const NavigationBar = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [

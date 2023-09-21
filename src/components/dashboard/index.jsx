@@ -1,8 +1,10 @@
 export { Dashboard } from "./Dashboard";
-export { NavigationBar } from "./Navbar";
+export { NavigationBar } from "./Navbar/Navbar";
 
-export { Team } from "./Team";
-export { Article } from "./Article";
-export { Exercise } from "./Exercise";
-export { Learn } from "./Learn";
-export { Race } from "./Race";
+export { Team } from "./Team/Team";
+export { Article } from "./Article/Article";
+export { Exercise } from "./Exercise/Exercise";
+export { Learn } from "./Learn/Learn";
+export { Race } from "./Race/Race";
+
+export { Question } from "./Exercise/Question";
