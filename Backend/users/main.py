@@ -114,6 +114,7 @@ async def check_user(connection, data: UserLoginSchema):
         return True
     return False
 
+#6 User Login
 @app.post("/user/login", tags=["user"])
 async def user_login(data: UserLoginSchema = Body(default=None)):
     async with app.db_pool.acquire() as connection:
@@ -122,13 +123,3 @@ async def user_login(data: UserLoginSchema = Body(default=None)):
         else:
             return {"error": "Invalid login details!"}
     
-#6 User Login
-@app.post("/user/login", tags=["user"])
-def user_login(user: UserLoginSchema = Body(default=None)):
-    if check_user(user):
-        return signJWT(user.email)
-    else:
-        return {
-            "error": "Invalid login details!"
-        }
-
