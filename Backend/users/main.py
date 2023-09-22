@@ -1,11 +1,10 @@
+import asyncpg
 from fastapi import FastAPI, Body, Depends
 import uvicorn
 from app.model import PostSchema
 from app.model import PostSchema, UserSchema, UserLoginSchema
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import JwtBearer
-
-## Hello world
 
 posts = [
     {
@@ -28,6 +27,33 @@ posts = [
 users = []
 
 app = FastAPI()
+
+@app.on_event("startup")
+async def startup():
+    app.db_pool = await asyncpg.create_pool(
+        user="quera", password="Password", database="quera",
+        host="localhost")
+    async with app.db_pool.acquire() as connection:
+        await connection.execute('''
+        CREATE TABLE IF NOT EXISTS customers (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) NOT NULL,
+        first_name VARCHAR(255),
+        last_name VARCHAR(255),
+        email VARCHAR(255) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL
+        )
+        ''')
+
+@app.on_event("shutdown")
+async def shutdown():
+    await app.db_pool.close()
+
+@app.get("/")
+async def read_root():
+    async with app.db_pool.acquire() as connection:
+        result = await connection.fetch("SELECT 1")
+        return {"result": result[0][0]}
 
 #1 Get - for testing
 @app.get("/", tags=['test'])
@@ -64,17 +90,39 @@ def add_post(post: PostSchema):
     }
 
 #5 User Signup [ Create a new user ]
-@app.post("user/signup", tags=["user"])
-def user_signup(user: UserSchema=Body(default=None)):
-    users.append(user)
-    return signJWT(user.email)
+async def create_customer(connection, customer):
+    query = '''
+    INSERT INTO customer (username, first_name, last_name, email, password)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING id
+    '''
+    record = await connection.fetchrow(query, customer.username, customer.first_name, customer.last_name, customer.email, customer.password)
+    return record['id']
 
-def check_user(data: UserLoginSchema):
-    for user in users:
-        if user.email == data.email and user.password == data.password:
-            return True
-        return False
+@app.post("/user/signup", tags=["user"])
+async def user_signup(customer: UserSchema = Body(default=None)):
+    async with app.db_pool.acquire() as connection:
+        customer_id = await create_customer(connection, customer)
+    return signJWT(customer.email)
 
+async def check_user(connection, data: UserLoginSchema):
+    query = '''
+    SELECT email, password FROM customer WHERE email=$1 AND password=$2
+    '''
+    result = await connection.fetchrow(query, data.email, data.password)
+    if result is not None:
+        return True
+    return False
+
+@app.post("/user/login", tags=["user"])
+async def user_login(data: UserLoginSchema = Body(default=None)):
+    async with app.db_pool.acquire() as connection:
+        if await check_user(connection, data):
+            return signJWT(data.email)
+        else:
+            return {"error": "Invalid login details!"}
+    
+#6 User Login
 @app.post("/user/login", tags=["user"])
 def user_login(user: UserLoginSchema = Body(default=None)):
     if check_user(user):
