@@ -5,6 +5,7 @@ from app.model import PostSchema
 from app.model import PostSchema, UserSchema, UserLoginSchema
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import JwtBearer
+from decouple import config
 
 posts = [
     {
@@ -27,11 +28,12 @@ posts = [
 users = []
 
 app = FastAPI()
+PASSWORD = config("Password_database")
 
 @app.on_event("startup")
 async def startup():
     app.db_pool = await asyncpg.create_pool(
-        user="quera", password="Password", database="quera",
+        user="quera", password=PASSWORD, database="quera",
         host="localhost")
     async with app.db_pool.acquire() as connection:
         await connection.execute('''
